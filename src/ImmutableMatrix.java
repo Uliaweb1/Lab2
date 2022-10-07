@@ -48,9 +48,7 @@ public final class ImmutableMatrix implements Matrix{
     @Override
     public double[] getRow(int n) {
         double[] res = new double[cols];
-        for (int i = 0; i < cols; i++) {
-            res[i] = data[n][i];
-        }
+        System.arraycopy(data[n], 0, res, 0, cols);
         return res;
     }
 
@@ -95,12 +93,14 @@ public final class ImmutableMatrix implements Matrix{
         return cols * rows;
     }
 
-//    public static ImmutableMatrix genCol(int n) {
-//        double[] tempCol = new double[n];
-//        for (int i = 0; i < n; i++) {
-//            tempCol[i] = Math.random();
-//
-//        }
-//        return null;
-//    }
+    public static ImmutableMatrix genCol(int n) {
+        double[] tempCol = new double[n];
+        for (int i = 0; i < n; i++) {
+            tempCol[i] = Math.random();
+
+        }
+        MutableMatrix m = new MutableMatrix(n,1);
+        m.setCol(tempCol, 0);
+        return new ImmutableMatrix(m);
+    }
 }

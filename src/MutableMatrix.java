@@ -55,9 +55,7 @@ public class MutableMatrix implements Matrix{
     @Override
     public double[] getRow(int n) {
         double[] res = new double[cols];
-        for (int i = 0; i < cols; i++) {
-            res[i] = data[n][i];
-        }
+        System.arraycopy(data[n], 0, res, 0, cols);
         return res;
     }
     @Override
@@ -68,15 +66,15 @@ public class MutableMatrix implements Matrix{
         }
         return res;
     }
-    public void setCol(double[] col, int colNumber){
+    public MutableMatrix setCol(double[] col, int colNumber){
         for (int i = 0; i < rows; i++) {
             data[i][colNumber] = col[i];
         }
+        return this;
     }
-    public void setRow(double[] row, int rowNumber){
-        for (int i = 0; i < cols; i++) {
-            data[rowNumber][i] = row[i];
-        }
+    public MutableMatrix setRow(double[] row, int rowNumber){
+        if (cols >= 0) System.arraycopy(row, 0, data[rowNumber], 0, cols);
+        return this;
     }
     @Override
     public boolean equals(Object obj) {
@@ -113,7 +111,7 @@ public class MutableMatrix implements Matrix{
         double[] tempCol = new double[n];
         for (int i = 0; i < n; i++) {
             int value = rand.nextInt(1000) - 500;
-            tempCol[i] = ((double) (value / 10));
+            tempCol[i] = value / 10.0;
 
         }
         MutableMatrix m = new MutableMatrix(n,1);
@@ -136,6 +134,7 @@ public class MutableMatrix implements Matrix{
             return this;
         }
         else {
+            System.out.println("Matrix size mismatch");
             return null;
         }
     }
