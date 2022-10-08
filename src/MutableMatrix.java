@@ -7,14 +7,14 @@ public class MutableMatrix implements Matrix{
 
     MutableMatrix() {
         this.data = new double[0][0];
-        System.out.println("Created empty MutableMatrix");
+        //System.out.println("Created empty MutableMatrix");
     }
 
     MutableMatrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
         this.data = new double[rows][cols];
-        System.out.println("Created MutableMatrix with fixed dimensions: " + rows + "x" + cols);
+        //System.out.println("Created MutableMatrix with fixed dimensions: " + rows + "x" + cols);
 
     }
 
@@ -27,7 +27,7 @@ public class MutableMatrix implements Matrix{
                 this.data[i][j] = a.getElement(i,j);
             }
         }
-        System.out.println("Created mutable copy of a matrix");
+        //System.out.println("Created mutable copy of a matrix");
     }
 
     @Override
