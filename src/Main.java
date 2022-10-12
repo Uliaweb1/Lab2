@@ -1,50 +1,127 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
+    private static int safeReadInt(Scanner stdin){
+        int a;
+        while (true){
+            try{
+                a = stdin.nextInt();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("Помилка вводу, введіть ціле число:");
+                stdin.next();
+                continue;
+            }
+        }
+        return a;
+    }
+    private static double safeReadDouble(Scanner stdin){
+        double a;
+        while (true){
+            try{
+                a = stdin.nextDouble();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("Помилка вводу, введіть число:");
+                stdin.next();
+                continue;
+            }
+        }
+        return a;
+    }
+    private static MutableMatrix menu1(Scanner stdin){
+        MutableMatrix a = new MutableMatrix();
+        System.out.println("Створено пусту матрицю");
+        a.print();
+        return a;
+    }
+    private static MutableMatrix menu2(Scanner stdin){
+        MutableMatrix m;
+        System.out.println("Введіть розмірність матриці: ");
+        int a = safeReadInt(stdin);
+        int b = safeReadInt(stdin);
+        m = new MutableMatrix(a,b);
+        System.out.println("Створено матрицю фіксованого розміру");
+        while(true){
+            System.out.println("Оберіть спосіб заповнення матриці: ");
+            System.out.println("1.Заповнити вручну");
+            System.out.println("2.Заповними випадковими значеннями");
+            int menuEntry=safeReadInt(stdin);
+            switch (menuEntry){
+                case 1:
+                    for (int row = 0; row < a; row++) {
+                        for (int col = 0; col < b; col++) {
+                            System.out.println("Введіть елемент [" + row + "][" + col +"]");
+                            m.setElement(row, col, safeReadDouble(stdin));
+                        }
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i < b; i++) {
+                        m.setCol(MutableMatrix.genCol(a).getCol(0), i);
+                    }
+                    break;
+                default:
+                    System.out.println("Неправильний пункт меню!");
+                    continue;
+            }
+            break;
+        }
+        m.print();
+        return m;
+    }
     public static void main(String[] args) {
-        MutableMatrix a1,b,c;
-        ImmutableMatrix a2;
-        a1 = new MutableMatrix();
-        a2 = new ImmutableMatrix ();
-        b = new MutableMatrix (3,4);
-        c = new MutableMatrix (b);
-        b.setElement(0,1, 1.0);
-        c.setElement(1,2,2.0);
-        c.setCol(new double[]{1.0, 2.0, 3.0},3);
-        c.setRow(new double[]{1.0, 2.0, 3.0, 6.0},2);
-        System.out.println("a1 and a2:");
-        a1.print();
-        a2.print();
-        System.out.println("b:");
-        b.print();
-        System.out.println("c:");
-        c.print();
-        System.out.println(Arrays.toString(c.getCol(2)));
-        System.out.println(Arrays.toString(c.getRow(2)));
-        System.out.println(c.equals(b));
-        System.out.println("d: ");
-        ImmutableMatrix d = new ImmutableMatrix (4,4);
-        d.print();
-        System.out.println("e: ");
-        MutableMatrix e = MutableMatrix.genCol(5);
-        e.print();
-        System.out.println("e2: ");
-        ImmutableMatrix e2 = ImmutableMatrix.genCol(5);
-        e2.print();
-        ImmutableMatrix f1 = new ImmutableMatrix(new MutableMatrix(3,1).setCol(new double[]{1, 2, 3},0));
-        ImmutableMatrix f2 = new ImmutableMatrix(new MutableMatrix(1,3).setRow(new double[]{1, 2, 3},0));
-        MutableMatrix res1 = new MutableMatrix (f1);
-        MutableMatrix res2 = new MutableMatrix (f2);
-        res1.multiply(f2);
-        res2.multiply(f1);
-        System.out.println("res1: ");
-        res1.print();
-        System.out.println("res2: ");
-        res2.print();
-        MutableMatrix g = new MutableMatrix(3,3);
-        g.setCol(new double[]{1,0,0},2);
-        g.setCol(new double[]{0,1,0},1);
-        g.setCol(new double[]{0,0,1},0);
-        g.multiply(f1).multiply(f2).print();
+        Scanner stdin = new Scanner(System.in);
+        boolean shouldContinue = true;
+        while (shouldContinue) {
+            System.out.println("1.Створити пусту матрицю");
+            System.out.println("2.Створити матрицю фіксованого розміру");
+            System.out.println("3.Зробити копію існуючої матриці");
+            System.out.println("4.Повернути розмірність матриці");
+            System.out.println("5.Порівняти дві матриці");
+            System.out.println("6.Створити матрицю-стовпчик, заповнену випадковими значеннями");
+            System.out.println("7.Перемножити матриці");
+            System.out.println("8.Вийти з програми");
+            System.out.println("Оберіть пункт меню: ");
+            int menuNumber = safeReadInt(stdin);
+            MutableMatrix a;
+            switch (menuNumber) {
+                case 1:
+                    a = menu1(stdin);
+                    break;
+                case 2:
+                    a = menu2(stdin);
+                    System.out.println("Введ");
+                    break;
+                case 3:
+                    System.out.println("Пункт 1");
+                    break;
+                case 4:
+                    System.out.println("Пункт 2");
+                    break;
+                case 5:
+                    System.out.println("Пункт 1");
+                    break;
+                case 6:
+                    System.out.println("Пункт 2");
+                    break;
+                case 7:
+                    System.out.println("Пункт 1");
+                    break;
+                case 8:
+                    System.out.println("Пункт 2");
+                    break;
+                case 9:
+                    shouldContinue = false;
+                    break;
+                default:
+                    System.out.println("Обрано неправильний пункт меню!");
+                    break;
+            }
+        }
+        System.out.println("Програма завершена");
     }
 }
