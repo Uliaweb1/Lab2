@@ -1,6 +1,6 @@
 interface Matrix {
     default void print() {
-        System.out.println("Matrix: " + getRows() + "x" + getCols());
+        System.out.println("Matrix " + getRows() + "x" + getCols());
         for (int i = 0; i < getRows(); i++) {
             double[] row = getRow(i);
             for (double elem : row) {

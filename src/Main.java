@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -7,16 +6,19 @@ public class Main {
         while (true){
             try{
                 a = stdin.nextInt();
+                if (a < 0) {
+                    System.out.println("Введено відьємне число, введить невідьємне:");
+                }
                 break;
             }
             catch (Exception e){
                 System.out.println("Помилка вводу, введіть ціле число:");
                 stdin.next();
-                continue;
             }
         }
         return a;
     }
+
     private static double safeReadDouble(Scanner stdin){
         double a;
         while (true){
@@ -27,28 +29,30 @@ public class Main {
             catch (Exception e){
                 System.out.println("Помилка вводу, введіть число:");
                 stdin.next();
-                continue;
             }
         }
         return a;
     }
-    private static MutableMatrix menu1(Scanner stdin){
-        MutableMatrix a = new MutableMatrix();
+
+    private static ImmutableMatrix menuGen(Scanner stdin){
+        System.out.println("Введіть кількість єлементів у стовпчику: ");
+        int n = safeReadInt(stdin);
+        ImmutableMatrix a = ImmutableMatrix.genCol(n);
         System.out.println("Створено пусту матрицю");
-        a.print();
         return a;
     }
-    private static MutableMatrix menu2(Scanner stdin){
-        MutableMatrix m;
+
+    private static ImmutableMatrix createMenu(Scanner stdin){
         System.out.println("Введіть розмірність матриці: ");
         int a = safeReadInt(stdin);
         int b = safeReadInt(stdin);
-        m = new MutableMatrix(a,b);
+        MutableMatrix m = new MutableMatrix(a,b);
         System.out.println("Створено матрицю фіксованого розміру");
         while(true){
             System.out.println("Оберіть спосіб заповнення матриці: ");
             System.out.println("1.Заповнити вручну");
             System.out.println("2.Заповними випадковими значеннями");
+            System.out.println("3.Заповними нулями");
             int menuEntry=safeReadInt(stdin);
             switch (menuEntry){
                 case 1:
@@ -64,57 +68,123 @@ public class Main {
                         m.setCol(MutableMatrix.genCol(a).getCol(0), i);
                     }
                     break;
+                case 3:
+                    System.out.println("Створено матрицю заповнену нулями");
+                    return new ImmutableMatrix(a, b);
                 default:
                     System.out.println("Неправильний пункт меню!");
                     continue;
             }
             break;
         }
-        m.print();
-        return m;
+        System.out.println("Матріцю створено та заповнено!");
+        return new ImmutableMatrix(m);
     }
+
     public static void main(String[] args) {
+        ImmutableMatrix a = null;
+        ImmutableMatrix b = null;
         Scanner stdin = new Scanner(System.in);
         boolean shouldContinue = true;
         while (shouldContinue) {
-            System.out.println("1.Створити пусту матрицю");
-            System.out.println("2.Створити матрицю фіксованого розміру");
-            System.out.println("3.Зробити копію існуючої матриці");
-            System.out.println("4.Повернути розмірність матриці");
-            System.out.println("5.Порівняти дві матриці");
-            System.out.println("6.Створити матрицю-стовпчик, заповнену випадковими значеннями");
-            System.out.println("7.Перемножити матриці");
-            System.out.println("8.Вийти з програми");
+            System.out.println();
+            if(a != null) {
+                System.out.print("A:");
+                a.print();
+            }
+            if(b != null) {
+                System.out.print("B:");
+                b.print();
+            }
+            System.out.println("0. Створити пусті матриці A та B");
+            System.out.println("1. Створити матрицю A");
+            System.out.println("2. Створити матрицю B");
+            System.out.println("3. Зробити копію матриці A та записати в B");
+            System.out.println("4. Зробити копію матриці B та записати в A");
+            System.out.println("5. Порівняти матриці A та B");
+            System.out.println("6. Створити матрицю-стовпчик, заповнену випадковими значеннями та записати в A");
+            System.out.println("7. Створити матрицю-стовпчик, заповнену випадковими значеннями та записати в B");
+            System.out.println("8. Перемножити матриці: AxB");
+            System.out.println("9. Перемножити матриці: BxA");
+            System.out.println("10. Вийти з програми");
             System.out.println("Оберіть пункт меню: ");
             int menuNumber = safeReadInt(stdin);
-            MutableMatrix a;
             switch (menuNumber) {
+                case 0:
+                    a = new ImmutableMatrix();
+                    b = new ImmutableMatrix();
+                    System.out.println("Створено пусті матриці A та B");
+                    break;
                 case 1:
-                    a = menu1(stdin);
+                    a = createMenu(stdin);
                     break;
                 case 2:
-                    a = menu2(stdin);
-                    System.out.println("Введ");
+                    b = createMenu(stdin);
                     break;
                 case 3:
-                    System.out.println("Пункт 1");
+                    if(a != null) {
+                        b = new ImmutableMatrix(a);
+                        System.out.print("Створено матрицю B - копию матрици A");
+                    }
+                    else {
+                        System.out.println("Спочатку створіть матрицю A");
+                    }
                     break;
                 case 4:
-                    System.out.println("Пункт 2");
+                    if(b != null) {
+                        a = new ImmutableMatrix(b);
+                        System.out.print("Створено матрицю A - копию матрици B");
+                    }
+                    else {
+                        System.out.println("Спочатку створіть матрицю B");
+                    }
                     break;
                 case 5:
-                    System.out.println("Пункт 1");
-                    break;
+                    if(a == null || b == null) {
+                        System.out.println("Спочатку створіть матриці A та B");
+                    }
+                    else {
+                        if(a.equals(b)) {
+                            System.out.println("Матриці рівні");
+                        }
+                        else {
+                            System.out.println("Матриці різні");
+                        }
+                        break;
+                    }
                 case 6:
-                    System.out.println("Пункт 2");
+                    a = menuGen(stdin);
                     break;
                 case 7:
-                    System.out.println("Пункт 1");
+                    b = menuGen(stdin);
                     break;
                 case 8:
-                    System.out.println("Пункт 2");
-                    break;
+                {
+                    if(a == null || b == null) {
+                        System.out.println("Спочатку створіть матриці A та B");
+                        break;
+                    }
+                    MutableMatrix c = new MutableMatrix(a).multiply(b);
+                    if(c != null) c.print();
+                    else {
+                        System.out.println("Помілка при множенні");
+                    }
+                }
+                break;
                 case 9:
+                {
+                    if(a == null || b == null) {
+                        System.out.println("Спочатку створіть матриці A та B");
+                        break;
+                    }
+                    MutableMatrix c = new MutableMatrix(b).multiply(a);
+                    if(c != null) c.print();
+                    else {
+                        System.out.println("Помілка при множенні");
+                    }
+                }
+                break;
+                case 10:
                     shouldContinue = false;
                     break;
                 default:
