@@ -1,142 +1,144 @@
 import java.util.Random;
 
-public class MutableMatrix implements Matrix{
-    private int cols;
-    private int rows;
-    private double[][] data;
+public class MutableMatrix implements Matrix{//клас митаблматрікс реалізує інтерфекс матрікс
+    private int cols;//приватні змінні (кількість стовпчиків)
+    private int rows;//приватні змінні (кількість рядків)
+    private double[][] data;//двовимірний масив елементів матриці; data-імя змінної.
 
-    MutableMatrix() {
-        this.data = new double[0][0];
-        //System.out.println("Created empty MutableMatrix");
+    MutableMatrix() {//конструктор за замовчуванням, створює пусту матрицю
+        this.data = new double[0][0];//в змінну data ми передаємо новий пустий двовимірний масив.
     }
 
-    MutableMatrix(int rows, int cols) {
-        this.rows = rows;
-        this.cols = cols;
-        this.data = new double[rows][cols];
-        //System.out.println("Created MutableMatrix with fixed dimensions: " + rows + "x" + cols);
+    MutableMatrix(int rows, int cols) {//параметричний конструктор, який створює матрицю заданого розміру(аргументи, які було передано в конструктор), заповнену нулями
+        this.rows = rows;//визначаємо приватну змінну ровс зі значанням яке передано в конструктор
+        this.cols = cols;//визначаємо приватну змінну колс зі значанням яке передано в конструктор
+        this.data = new double[rows][cols];//виділяємо масив для елементів матриці потрібного розміру
 
     }
-
-    MutableMatrix(Matrix a) {
-        this.rows = a.getRows();
-        this.cols = a.getCols();
-        this.data = new double[rows][cols];
+    MutableMatrix(Matrix a) {//а-аргумент конструктора, робить копію матриці
+        this.rows = a.getRows();// ініціюємо значення ровс значенням з матриці а.
+        this.cols = a.getCols();// ініціюємо значення колс значенням з матриці а.
+        this.data = new double[rows][cols];//виділяємо двомвимірний масив для елементів матриці
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                this.data[i][j] = a.getElement(i,j);
+                this.data[i][j] = a.getElement(i,j);//ініціюємо елеметри матриці значеннями з матриці а, значення записуємо в дата(в елемент).
             }
         }
-        //System.out.println("Created mutable copy of a matrix");
     }
 
-    @Override
+    @Override//тому що функція з інтерфейсу, реалізація інтерфейсної функції
     public int getCols() {
         return cols;
-    }
+    }//геттер для колс, фнкція яка повертає значення змінної колс(кількість стовпчиків)
 
-    public void setSize(int rows, int cols) {
+    public void setSize(int rows, int cols) {//функція, яка задає розміри матриці
         this.cols = cols;
         this.rows = rows;
-        this.data = new double[rows][cols];
+        this.data = new double[rows][cols];//виділяємо новий масив для елементів матриці
     }
     @Override
     public int getRows() {
         return rows;
-    }
+    }//геттер для ровс, фнкція яка повертає значення змінної ровс(кількість рядків)
     @Override
     public double getElement(int row, int col) {
         return data[row][col];
-    }
+    }//геттер для елементів матриці, фнкція яка повертає значення елемета матриці з індексами (ров, кол).
 
-    public void setElement(int row, int col, double value) {
+    public MutableMatrix setElement(int row, int col, double value) {
         data[row][col] = value;
-    }
+        return this;
+    }//сеттер для елементів матриці, функція задає елемент матриці з індексами (ров, кол).
     @Override
-    public double[] getRow(int n) {
-        double[] res = new double[cols];
-        System.arraycopy(data[n], 0, res, 0, cols);
+    public double[] getRow(int n) {//функція повертає копію рядка матриці
+        double[] res = new double[cols];//виділяємо масив рес для рядка, який поверне функція
+        System.arraycopy(data[n], 0, res, 0, cols);//data n- масив, з якого робиться копія, 0- початкова позиція у вхідному масиві, рес-масив в який ми копіюємо, 0-початкова позиція у вихідному масиві масиві рес, колс-кількість елементів, які треба скопіювати
         return res;
     }
     @Override
-    public double[] getCol(int n) {
-        double[] res = new double[rows];
+    public double[] getCol(int n) {//функція повертає копію стовпчика матриці
+        double[] res = new double[rows];//виділяємо масив рес для стовпчика,який поверне функція
         for (int i = 0; i < rows; i++) {
-            res[i] = data[i][n];
+            res[i] = data[i][n];//в елемент масива рес записується значення відповідного елемента зі стовпчика з номером н
         }
-        return res;
+        return res;//повертаємо масив
     }
-    public MutableMatrix setCol(double[] col, int colNumber){
+    public MutableMatrix setCol(double[] col, int colNumber){//функця яка задає стовпчик матриці, colNumber- імя аргумента функії або змінної, це номер стовпця для перезапису. Функція перезаписує стовпчик з номером колнамбер
         for (int i = 0; i < rows; i++) {
-            data[i][colNumber] = col[i];
+            data[i][colNumber] = col[i];// копіюємо з масива в матрицю
         }
+        return this;//повертається теперішня матриця
+    }
+    public MutableMatrix setRow(double[] row, int rowNumber){//функця яка задає стовпчик матриці, rowNumber-номер рядка.
+        if (cols >= 0) System.arraycopy(row, 0, data[rowNumber], 0, cols);//копіювання рядка за допомогою бібліотечно функції
         return this;
     }
-    public MutableMatrix setRow(double[] row, int rowNumber){
-        if (cols >= 0) System.arraycopy(row, 0, data[rowNumber], 0, cols);
-        return this;
-    }
-    @Override
+    @Override//реалізація функції порівняння для мютаблматрікс.
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
 
-        if (obj.getClass() != this.getClass()) {
+        if (obj.getClass() != this.getClass()) {//Пеперевіряємо тип аргументу, який передали, якщо нам передали не матрицю, то ми повериаємо фолс
             return false;
         }
-        final MutableMatrix other = (MutableMatrix) obj;
+        final MutableMatrix other = (MutableMatrix) obj;//конвертація обєкта в мютаблматрікс, final-означає, що значення до кінця виконання функції не буде змінюватись
 
-        if (this.rows != other.rows) {
+        if (this.rows != other.rows) {//порівнюємо кількість рядків
             return false;
         }
-        if (this.cols != other.cols) {
+        if (this.cols != other.cols) {//порівнюємо кількість стовпців
             return false;
         }
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (this.data[i][j] != other.data[i][j]) {
+                if (this.data[i][j] != other.data[i][j]) {//порівнюємо елементи матриць, якщо елементи нерівні, то повертаємо фолс
                     return false;
                 }
             }
         }
-        return true;
+        return true;//в іншому випадку повертаємо тру, тому матриці рівні
     }
     @Override
-    public int hashCode() {
+    public int hashCode() { //в даному випадку хешкод повертає кількість елементів в матриці, якщо кількість елементів різна, то матриці нерівні
         return cols * rows;
     }
-    public static MutableMatrix genCol(int n) {
-        Random rand = new Random();
-        double[] tempCol = new double[n];
+    public static MutableMatrix genCol(int n) {//статік викликається без матриці, функція створю матрицю з одного стовпчика та поертає цю матрицю, цей стовпчик заповнються випадковими числами
+        Random rand = new Random();//ініціалізація генератора випадкових чисел.
+        double[] tempCol = new double[n];//створюємо масив розміру н,назва масиву-тепмкол
         for (int i = 0; i < n; i++) {
-            int value = rand.nextInt(1000) - 500;
-            tempCol[i] = value / 10.0;
-
+            int value = rand.nextInt(1000) - 500;// діапазон випадкових чисел: -500 до 500
+            tempCol[i] = value / 10.0;//дабл тип, ось отримане рандомне число ділимо на 10.0
         }
-        MutableMatrix m = new MutableMatrix(n,1);
-        m.setCol(tempCol, 0);
-        return m;
+        MutableMatrix m = new MutableMatrix(n,1);//виділяємо нову матрицю з імям м, і розмір цієї матриці н на 1(матриця стовпчик)
+        m.setCol(tempCol, 0);//записуємо значення з тепмкол(масив заповнений випадковими числами) в матрицю м.
+        return m;//повертаємо матрицю м
     }
-    public MutableMatrix multiply(Matrix other){
-        MutableMatrix temp = new MutableMatrix (this);
+    public MutableMatrix multiply(Matrix other){//множимо теперішню матрицю на задану (аргумент у мультіпрау(азер))
+        MutableMatrix temp = new MutableMatrix (this);//виділяємо нову матрицю темп, яка є копією теперішньої
         if( temp.getCols() == other.getRows()){// перевіряємо розміри мартиць (для можливості перемноження)
             this.setSize(temp.getRows(), other.getCols());//задаємо нові розміри для результату (для матриці)
             for (int i = 0; i < temp.getRows(); i++) {//заповнюємо матрицю результатами скалярних добутків відповідних векторів
                 for (int j = 0; j < other.getCols(); j++) {
-                    double scalarProduct = 0.0;
+                    double scalarProduct = 0.0;//спочатку у нас 0, а потім туди додаємо добутки відповідних елементів матриць
                     for (int k = 0; k < temp.getCols(); k++) {//цикл для обчислення скалярного добутку
-                        scalarProduct += temp.getRow(i)[k] * other.getCol(j)[k];
+                        scalarProduct += temp.getRow(i)[k] * other.getCol(j)[k];//додаємо добуток катих елементів відповідного рядка та стовпчика
                     }
-                    this.data[i][j] = scalarProduct;
+                    this.data[i][j] = scalarProduct;//результат записуємо в елетент з індексами i,j
                 }
             }
             return this;
         }
         else {
-            System.out.println("Matrix size mismatch");
+            System.out.println("Кількість стовпчиків першої матриці не дорівнює кількості рядків другої, тому їх не можна перемножити");
             return null;
         }
     }
-
 }
+//Робимо копію теперішньої матриці в матрицю тепм, будемо множити матрицю тепм на матрицю азер, а результат записувати в теперішню
+// тобто перша матриця- це матриця темп, а друга матриця, це матриця азер.
+// Спочатку перевіряємо розміри матриць (першої і другої), чи дозволяють ці розміри множення,
+// якщо дозволяють, то змінюємо розмри теперішньої матриці
+//для кожного елемента теперішньої матриці(елемент на рядку і, в стовпчику j) розраховуємо скалярний добуток рядка і першої матриц
+//на стовпчик j другої матриці.
+
