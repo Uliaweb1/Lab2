@@ -15,13 +15,13 @@ public final class ImmutableMatrix implements Matrix{
         this.data = new double[rows][cols];
     }
 
-    ImmutableMatrix(Matrix a) {
-        this.rows = a.getRows();
-        this.cols = a.getCols();
+    ImmutableMatrix(Matrix m) {//копіювання
+        this.rows = m.getRows();
+        this.cols = m.getCols();
         this.data = new double[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                this.data[i][j] = a.getElement(i,j);
+                this.data[i][j] = m.getElement(i,j);
             }
         }
     }

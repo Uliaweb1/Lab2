@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2f464692-c120-4f74-80c7-abc6d5df4276" name="Changes" comment="added new menu1">
+    <list default="true" id="2f464692-c120-4f74-80c7-abc6d5df4276" name="Changes" comment="Added new menu entries">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ImmutableMatrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ImmutableMatrix.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MutableMatrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MutableMatrix.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,7 +114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665862739602</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added new menu entries">
+      <created>1666118550017</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1666118550017</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -137,6 +143,7 @@
     <MESSAGE value="added menu" />
     <MESSAGE value="added new menu" />
     <MESSAGE value="added new menu1" />
-    <option name="LAST_COMMIT_MESSAGE" value="added new menu1" />
+    <MESSAGE value="Added new menu entries" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added new menu entries" />
   </component>
 </project>

@@ -194,8 +194,8 @@ public class Main {
                 case 10:
                     if(a != null) {
                         System.out.print("Задайте номер рядка і стовпчика (нумерація з 1): ");
-                        int r = safeReadInt(stdin) -1;
-                        int c = safeReadInt(stdin) -1;
+                        int r = safeReadInt(stdin) - 1;
+                        int c = safeReadInt(stdin) - 1;
                         if ((r<a.getRows() && c<a.getCols())&&(r>=0 && c>=0))  {
                             System.out.println("Значення елементу: " + a.getElement(r,c));
                         }
@@ -210,8 +210,8 @@ public class Main {
                 case 11:
                     if(b != null) {
                         System.out.print("Задайте номер рядка і стовпчика (нумерація з 1): ");
-                        int r = safeReadInt(stdin) -1;
-                        int c = safeReadInt(stdin) -1;
+                        int r = safeReadInt(stdin) - 1;
+                        int c = safeReadInt(stdin) - 1;
                         if ((r<b.getRows() && c<b.getCols())&&(r>=0 && c>=0))  {
                             System.out.println("Значення елементу: " + b.getElement(r,c));
                         }
@@ -226,8 +226,8 @@ public class Main {
                 case 12:
                     if(a != null) {
                         System.out.print("Задайте номер рядка і стовпчика (нумерація з 1): ");
-                        int r = safeReadInt(stdin) -1;
-                        int c = safeReadInt(stdin) -1;
+                        int r = safeReadInt(stdin) - 1;
+                        int c = safeReadInt(stdin) - 1;
                         if ((r<a.getRows() && c<a.getCols())&&(r>=0 && c>=0))  {
                             System.out.println("Задайте нове значення елементу: ");
                             double v = safeReadDouble(stdin);
@@ -244,8 +244,8 @@ public class Main {
                 case 13:
                     if(b != null) {
                         System.out.print("Задайте номер рядка і стовпчика (нумерація з 1): ");
-                        int r = safeReadInt(stdin) -1;
-                        int c = safeReadInt(stdin) -1;
+                        int r = safeReadInt(stdin) - 1;
+                        int c = safeReadInt(stdin) - 1;
                         if ((r<b.getRows() && c<b.getCols())&&(r>=0 && c>=0))  {
                             System.out.println("Задайте нове значення елементу: ");
                             double v = safeReadDouble(stdin);
