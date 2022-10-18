@@ -7,15 +7,12 @@ public final class ImmutableMatrix implements Matrix{
         rows = 0;
         cols = 0;
         this.data = new double[0][0];
-        System.out.println("Created empty matrix");
     }
 
     ImmutableMatrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
         this.data = new double[rows][cols];
-        System.out.println("Created matrix with fixed dimensions: " + rows + "x" + cols);
-
     }
 
     ImmutableMatrix(Matrix a) {
@@ -27,7 +24,6 @@ public final class ImmutableMatrix implements Matrix{
                 this.data[i][j] = a.getElement(i,j);
             }
         }
-        System.out.println("Created immutable copy of a matrix");
     }
 
     @Override
@@ -104,6 +100,3 @@ public final class ImmutableMatrix implements Matrix{
         return new ImmutableMatrix(m);
     }
 }
-//ДЛя того щоб клас був імитабл, треба виконати декілька умов:1) клас повинен бути final
-// 2)всі приватні члени класу повинні бути final, це означає, що всі приватні члени класу можуть бути модифіковані лише у конструкторі.
-//оскільки члени класу можуть бути модифіковані лише у конструкторі, то не може бути сетерів, тобто модифікацій членів класу після створення обєкту

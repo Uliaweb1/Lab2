@@ -1,22 +1,22 @@
 interface Matrix {
-    default void print() {//функція щоб вивести матриці на екран
-        System.out.println("Matrix " + getRows() + "x" + getCols());//вивід на екран розмірність матриці(гетровс та гетколс - це гетери для розміру матриці)
+    default void print() {
+        System.out.println("Matrix " + getRows() + "x" + getCols());
         for (int i = 0; i < getRows(); i++) {
             double[] row = getRow(i);
-            for (double elem : row) {//цикл по елементам рядка
-                System.out.print(elem + " ");//Виводимо елемент (і пробіл(в матриці між елементами))
+            for (double elem : row) {
+                System.out.print(elem + " ");
             }
-            System.out.println();//принт і перехід на новий рядок (в матриці)
+            System.out.println();
         }
     }
 
-    int getCols();//функція яка повертає кількість стовпчиків матриці
+    int getCols();
 
-    int getRows();//функція яка повертає кількість рядків матриці
+    int getRows();
 
-    double getElement(int row, int col);//функція яка повертає елемент рядку ров та стовпчику кол.
+    double getElement(int row, int col);
 
 
-    double[] getRow(int n);//гетер для радка з номером н, повертає масив чисел.
-    double[] getCol(int n);//повертає масив значень елементів стовпчика з номером н.
+    double[] getRow(int n);
+    double[] getCol(int n);
 }

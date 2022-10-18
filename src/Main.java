@@ -34,15 +34,14 @@ public class Main {
         return a;
     }
 
-    private static ImmutableMatrix menuGen(Scanner stdin){
+    private static MutableMatrix menuGen(Scanner stdin){
         System.out.println("Введіть кількість елементів у стовпчику: ");
         int n = safeReadInt(stdin);
-        ImmutableMatrix a = ImmutableMatrix.genCol(n);
         System.out.println("Створено пусту матрицю");
-        return a;
+        return MutableMatrix.genCol(n);
     }
 
-    private static ImmutableMatrix createMenu(Scanner stdin){
+    private static MutableMatrix createMenu(Scanner stdin){
         System.out.println("Введіть розмірність матриці: ");
         int a = safeReadInt(stdin);
         int b = safeReadInt(stdin);
@@ -70,7 +69,7 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Створено матрицю заповнену нулями");
-                    return new ImmutableMatrix(a, b);
+                    return new MutableMatrix(a, b);
                 default:
                     System.out.println("Неправильний пункт меню!");
                     continue;
@@ -78,12 +77,14 @@ public class Main {
             break;
         }
         System.out.println("Матрицю створено та заповнено!");
-        return new ImmutableMatrix(m);
+        return m;
     }
 
     public static void main(String[] args) {
-        ImmutableMatrix a = null;
-        ImmutableMatrix b = null;
+        MutableMatrix a = null;
+        MutableMatrix b = null;
+        ImmutableMatrix copyA = null;
+        ImmutableMatrix copyB = null;
         Scanner stdin = new Scanner(System.in);
         boolean shouldContinue = true;
         while (shouldContinue) {
@@ -99,21 +100,26 @@ public class Main {
             System.out.println("0. Створити пусті матриці A та B");
             System.out.println("1. Створити матрицю A");
             System.out.println("2. Створити матрицю B");
-            System.out.println("3. Зробити копію матриці A та записати в B");
-            System.out.println("4. Зробити копію матриці B та записати в A");
+            System.out.println("3. Зробити копію матриці A");
+            System.out.println("4. Зробити копію матриці B");
             System.out.println("5. Порівняти матриці A та B");
             System.out.println("6. Створити матрицю-стовпчик, заповнену випадковими значеннями та записати в A");
             System.out.println("7. Створити матрицю-стовпчик, заповнену випадковими значеннями та записати в B");
             System.out.println("8. Перемножити матриці: AxB");
             System.out.println("9. Перемножити матриці: BxA");
             System.out.println("10. Дістати елемент з матриці А");
-            System.out.println("11. Вийти з програми");
+            System.out.println("11. Дістати елемент з матриці B");
+            System.out.println("12. Замінити елемент в матриці А");
+            System.out.println("13. Замінити елемент в матриці B");
+            System.out.println("14. Показати останню збережену копію матриці А");
+            System.out.println("15. Показати останню збережену копію матриці В");
+            System.out.println("16. Вийти з програми");
             System.out.println("Оберіть пункт меню: ");
             int menuNumber = safeReadInt(stdin);
             switch (menuNumber) {
                 case 0:
-                    a = new ImmutableMatrix();
-                    b = new ImmutableMatrix();
+                    a = new MutableMatrix();
+                    b = new MutableMatrix();
                     System.out.println("Створено пусті матриці A та B");
                     break;
                 case 1:
@@ -124,8 +130,8 @@ public class Main {
                     break;
                 case 3:
                     if(a != null) {
-                        b = new ImmutableMatrix(a);
-                        System.out.print("Створено матрицю B - копію матриці A");
+                        copyA = new ImmutableMatrix(a);
+                        System.out.print("Створено копію матриці А");
                     }
                     else {
                         System.out.println("Спочатку створіть матрицю A");
@@ -133,8 +139,8 @@ public class Main {
                     break;
                 case 4:
                     if(b != null) {
-                        a = new ImmutableMatrix(b);
-                        System.out.print("Створено матрицю A - копію матриці B");
+                        copyB = new ImmutableMatrix(b);
+                        System.out.print("Створено копію матриці В");
                     }
                     else {
                         System.out.println("Спочатку створіть матрицю B");
@@ -202,6 +208,76 @@ public class Main {
                     }
                     break;
                 case 11:
+                    if(b != null) {
+                        System.out.print("Задайте номер рядка і стовпчика (нумерація з 1): ");
+                        int r = safeReadInt(stdin) -1;
+                        int c = safeReadInt(stdin) -1;
+                        if ((r<b.getRows() && c<b.getCols())&&(r>=0 && c>=0))  {
+                            System.out.println("Значення елементу: " + b.getElement(r,c));
+                        }
+                        else {
+                            System.out.println("Задані індекси знаходяться за межами розмірів матриці!");
+                        }
+                    }
+                    else {
+                        System.out.println("Спочатку створіть матрицю B");
+                    }
+                    break;
+                case 12:
+                    if(a != null) {
+                        System.out.print("Задайте номер рядка і стовпчика (нумерація з 1): ");
+                        int r = safeReadInt(stdin) -1;
+                        int c = safeReadInt(stdin) -1;
+                        if ((r<a.getRows() && c<a.getCols())&&(r>=0 && c>=0))  {
+                            System.out.println("Задайте нове значення елементу: ");
+                            double v = safeReadDouble(stdin);
+                            a.setElement(r,c,v);
+                        }
+                        else {
+                            System.out.println("Задані індекси знаходяться за межами розмірів матриці!");
+                        }
+                    }
+                    else {
+                        System.out.println("Спочатку створіть матрицю A");
+                    }
+                    break;
+                case 13:
+                    if(b != null) {
+                        System.out.print("Задайте номер рядка і стовпчика (нумерація з 1): ");
+                        int r = safeReadInt(stdin) -1;
+                        int c = safeReadInt(stdin) -1;
+                        if ((r<b.getRows() && c<b.getCols())&&(r>=0 && c>=0))  {
+                            System.out.println("Задайте нове значення елементу: ");
+                            double v = safeReadDouble(stdin);
+                            b.setElement(r,c,v);
+                        }
+                        else {
+                            System.out.println("Задані індекси знаходяться за межами розмірів матриці!");
+                        }
+                    }
+                    else {
+                        System.out.println("Спочатку створіть матрицю B");
+                    }
+                    break;
+                case 14:
+                    if(copyA != null) {
+                        System.out.println("Остання копія матриці А: ");
+                        copyA.print();
+                    }
+                    else {
+                        System.out.println("Жодної копії матриці А ще не було збережено!");
+                    }
+                    break;
+                case 15:
+                    if(copyB != null) {
+                        System.out.println("Остання копія матриці B: ");
+                        copyB.print();
+                    }
+                    else {
+                        System.out.println("Жодної копії матриці B ще не було збережено!");
+                    }
+                    break;
+                case 16:
                     shouldContinue = false;
                     break;
                 default:
