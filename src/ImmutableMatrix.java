@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public final class ImmutableMatrix implements Matrix{
     private final int cols;
     private final int rows;
@@ -90,10 +92,11 @@ public final class ImmutableMatrix implements Matrix{
     }
 
     public static ImmutableMatrix genCol(int n) {
+        Random rand = new Random();
         double[] tempCol = new double[n];
         for (int i = 0; i < n; i++) {
-            tempCol[i] = Math.random();
-
+            int value = rand.nextInt(1000) - 500;
+            tempCol[i] = value / 10.0;
         }
         MutableMatrix m = new MutableMatrix(n,1);
         m.setCol(tempCol, 0);

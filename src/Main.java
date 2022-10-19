@@ -34,11 +34,11 @@ public class Main {
         return a;
     }
 
-    private static MutableMatrix menuGen(Scanner stdin){
+    private static ImmutableMatrix menuGen(Scanner stdin){
         System.out.println("Введіть кількість елементів у стовпчику: ");
         int n = safeReadInt(stdin);
-        System.out.println("Створено пусту матрицю");
-        return MutableMatrix.genCol(n);
+        System.out.println("Створено матрицю-стовпчик: ");
+        return ImmutableMatrix.genCol(n);
     }
 
     private static MutableMatrix createMenu(Scanner stdin){
@@ -85,6 +85,7 @@ public class Main {
         MutableMatrix b = null;
         ImmutableMatrix copyA = null;
         ImmutableMatrix copyB = null;
+        ImmutableMatrix colMatrix = null;
         Scanner stdin = new Scanner(System.in);
         boolean shouldContinue = true;
         while (shouldContinue) {
@@ -103,8 +104,8 @@ public class Main {
             System.out.println("3. Зробити копію матриці A");
             System.out.println("4. Зробити копію матриці B");
             System.out.println("5. Порівняти матриці A та B");
-            System.out.println("6. Створити матрицю-стовпчик, заповнену випадковими значеннями та записати в A");
-            System.out.println("7. Створити матрицю-стовпчик, заповнену випадковими значеннями та записати в B");
+            System.out.println("6. Створити матрицю-стовпчик, заповнену випадковими значеннями");
+            System.out.println("7. Вивести на екран матрицю-стовпчик, заповнену випадковими значеннями");
             System.out.println("8. Перемножити матриці: AxB");
             System.out.println("9. Перемножити матриці: BxA");
             System.out.println("10. Дістати елемент з матриці А");
@@ -160,10 +161,15 @@ public class Main {
                         break;
                     }
                 case 6:
-                    a = menuGen(stdin);
+                    colMatrix = menuGen(stdin);
+                    colMatrix.print();
                     break;
                 case 7:
-                    b = menuGen(stdin);
+                    if(colMatrix == null) {
+                        System.out.println("Спочатку створіть матрицю-стовпчик");
+                        break;
+                    }
+                    colMatrix.print();
                     break;
                 case 8:
                 {
